@@ -139,7 +139,7 @@ function build_app_bundle(juliaprog_main;
     custom_program_c = "$(@__DIR__)/program.c"
     cc_flags = Sys.isapple() ? `-mmacosx-version-min=10.10 -headerpad_max_install_names` : nothing
     # Provide an environment variable telling the code it's being compiled into a mac bundle.
-    withenv("LD_LIBRARY_PATH"=>"$libs_dir:$libs_dir/julia",
+    withenv("LD_LIBRARY_PATH"=>"$libs_dir:$libs_dir/julia:$(get(ENV, "LD_LIBRARY_PATH", ""))",
             "COMPILING_APPLE_BUNDLE"=>"true") do
         verbose && println("  PackageCompiler.static_julia(...)")
         # Compile executable and copy julia libs to $launcher_dir.
